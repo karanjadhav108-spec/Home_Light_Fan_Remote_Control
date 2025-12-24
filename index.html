@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Switch Dashboard</title>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <style>
+    body { font-family: Arial; text-align: center; }
+    button {
+      width: 200px;
+      height: 60px;
+      font-size: 18px;
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>My Smart Switch</h2>
+
+  <button onclick="send('home/krn/rightlight')">Right Light</button><br>
+  <button onclick="send('home/krn/fan')">Fan</button><br>
+  <button onclick="send('home/krn/leftlight')">Left Light</button>
+
+<script>
+  const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
+
+  client.on("connect", () => {
+    console.log("Connected to MQTT");
+  });
+
+  function send(topic) {
+    client.publish(topic, "TOGGLE");
+  }
+</script>
+</body>
+</html>
